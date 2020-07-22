@@ -1,159 +1,99 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LIKELION</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-    <link rel="stylesheet" href="{% static 'posts/css/style.css' %}">
-</head>
-<body class="d-flex flex-column h-100">
-
-    <!-- navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand mb-0 h1" href="#">LIKELION</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link" href="{% url 'new' %}">글쓰기</a>
-                </li>
-                <!-- account -->
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    SignUp
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Signup</a>
-                    <a class="dropdown-item" href="#">Signin</a>
-                </div>
-                </li>
-                <!-- //account -->
-            </ul>
- 
-            </div>
-        </div>
-    </nav>
-    <!-- //navbar -->
-
-    <!-- jumbotron -->
-    <div class="container" style="padding-top: 2rem;">
-        <div class="jumbotron mt-5">
-            <div class="col-sm-8 mx-auto">
-            <h1>LIKELION SYU 8TH</h1>
-            <p>멋쟁이사자처럼 Django 세션에서 사용하는 자료입니다. </p>
-            </div>
+{% extends 'base.html' %}
+{% block contents%}
+<!-- jumbotron -->
+<div class="container" style="padding-top: 2rem;">
+    <div class="jumbotron mt-5">
+        <div class="col-sm-8 mx-auto">
+        <h1>LIKELION SYU 8TH</h1>
+        <p>멋쟁이사자처럼 Django 세션에서 사용하는 자료입니다. </p>
         </div>
     </div>
-    <!-- //jumbotron -->
+</div>
+<!-- //jumbotron -->
 
-    <!--content -->
-    <div class="container">
-        <div class="row">
-            <!-- grid 왼쪽-->
-            <div class="col-md-8 order-md-1">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    게시글
-                </h4>
-                {% for post in posts %}
-                    <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media">
-                                <img src="{{ post.img.url }}" class="align-self-center mr-3" alt="...">
-                                <div class="media-body">
-                                    <small class="text-muted">{{ post.updated_at }}</small>
-                                    <h5 class="mt-0">{{ post.title }}</h5>
-                                    <p>{{ post.summary }}<a href="{% url 'detail' post.id %}"">...more</a></p>
-                                </div>
+<!--content -->
+<div class="container">
+    <div class="row">
+        <!-- grid 왼쪽-->
+        <div class="col-md-8 order-md-1">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                게시글
+            </h4>
+            {% for post in posts %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="media">
+                            <img src="{{ post.img.url }}" class="align-self-center mr-3" alt="...">
+                            <div class="media-body">
+                                <small class="text-muted">{{ post.updated_at }}</small>
+                                <h5 class="mt-0">{{ post.title }}</h5>
+                                <p>{{ post.summary }}<a href="{% url 'detail' post.id %}"">...more</a></p>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-                <!-- pagination -->
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center ">
-                    {% if posts.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1" aria-disabled="true">&lt;</a>
-                    </li>
-                    {% endif %}
-                    <li class="page-item"><a class="page-link" href="#">{{posts.number}}/{{posts.paginator.num_pages}}</a></li>
-                    {% if posts.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
-                    </li>
-                    {% endif %}
-                    </ul>
-                </nav>
-                <!-- //pagination -->
-            </div>
-            <!-- // grid 왼쪽 -->
-            <!-- grid 오른쪽 -->
-            <div class="col-md-4 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span>멋쟁이사자처럼 at 삼육대학교</span>
-                </h4>
-                    <ul class="list-group mb-3">
-                        <a href="https://github.com/SYULION8TH">
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">GitHub</h6>
-                                </div>
-                                <span class="text-muted">→</span>
-                            </li>
-                        </a>
-                        <a href="https://www.facebook.com/likelionsahmyook">
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Facebook</h6>
-                            </div>
-                            <span class="text-muted">→</span>
-                            </li>
-                        </a>
-                        <a href="https://www.instagram.com/likelion_syu/">
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Instagram</h6>
-                            </div>
-                            <span class="text-muted">→</span>
-                            </li>
-                        </a>
-                        <a href="https://www.notion.so/LIKELION-at-SYU-8th-89109b24af4f47b9af51170bee1bd769">
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Notion</h6>
-                            </div>
-                            <span class="text-muted">→</span>
-                            </li>
-                        </a>
-                    </ul>
-            </div>
-            <!-- // grid 오른쪽 -->
+                </div>
+            {% endfor %}
+            <!-- pagination -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center ">
+                {% if posts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.previous_page_number }}" tabindex="-1" aria-disabled="true">&lt;</a>
+                </li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{posts.number}}/{{posts.paginator.num_pages}}</a></li>
+                {% if posts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a>
+                </li>
+                {% endif %}
+                </ul>
+            </nav>
+            <!-- //pagination -->
         </div>
+        <!-- // grid 왼쪽 -->
+        <!-- grid 오른쪽 -->
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span>멋쟁이사자처럼 at 삼육대학교</span>
+            </h4>
+                <ul class="list-group mb-3">
+                    <a href="https://github.com/SYULION8TH">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <h6 class="my-0">GitHub</h6>
+                            </div>
+                            <span class="text-muted">→</span>
+                        </li>
+                    </a>
+                    <a href="https://www.facebook.com/likelionsahmyook">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Facebook</h6>
+                        </div>
+                        <span class="text-muted">→</span>
+                        </li>
+                    </a>
+                    <a href="https://www.instagram.com/likelion_syu/">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Instagram</h6>
+                        </div>
+                        <span class="text-muted">→</span>
+                        </li>
+                    </a>
+                    <a href="https://www.notion.so/LIKELION-at-SYU-8th-89109b24af4f47b9af51170bee1bd769">
+                        <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Notion</h6>
+                        </div>
+                        <span class="text-muted">→</span>
+                        </li>
+                    </a>
+                </ul>
+        </div>
+        <!-- // grid 오른쪽 -->
     </div>
-    <!-- //content -->
-
-    <!-- footer -->
-    <footer class="footer mt-auto py-3">
-        <div class="container">
-          <span class="text-muted"><small>© LIKELION AT SAHMYOOK UNIV, Boram We. 2020. </small></span>
-        </div>
-    </footer>
-    <!-- //footer -->
-
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-</body>
-</html>
+</div>
+<!-- //content -->
+{% endblock %}
